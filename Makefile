@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g
+CXXFLAGS = -std=c++14 -g -Wall -Wextra -pedantic -Werror
 
 OUT_DIR = build
 SRC_DIR = src
