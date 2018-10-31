@@ -64,25 +64,15 @@ Instance::Instance() {
 
             }
 
-        } else if ( findKeyword(line, "DEPOT_SECTION") ) {
-
-            std::getline(std::cin, line);
-            while ( ! findKeyword(line, "-1") ) {
-
-                size_t id;
-                std::sscanf(line.data(), "%zu", &id);
-
-                nodes[id - 1].is_depot = true;
-
-                std::getline(std::cin, line);
-
-            }
-
         }
 
         // Se lee solamente los campos con datos útiles. Se ignora el resto.
 
     }
+
+    // Por el enunciado, se toma el nodo 1 como el único deposito
+    nodes[0].is_depot = true;
+
 }
 
 size_t Instance::size() const {
