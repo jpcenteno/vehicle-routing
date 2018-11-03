@@ -11,7 +11,30 @@ struct Node {
     unsigned int demand = 0;
     bool is_depot       = false;
 
+	Node(int i, int j, unsigned int d, bool depot) {
+		x = i;
+		y = j;
+		demand = d;
+		is_depot = depot;	
+	}
+
 };
+
+struct Saving{
+
+	int i;
+	int j;
+	int s;
+
+	bool operator<(const Saving &a) const {
+    		return s < a.s;
+	}
+};
+
+
+
+
+typedef std::vector<std::vector<int> > MatrizDist;
 
 
 /** Una instancia del problema a resolver */
