@@ -59,21 +59,32 @@ for(int i = 0; i<n; i++){
 } 
 
 
-deque<Saving> cluster;
- 
 
-/*Salida de prueba para savings
+vector<bool> visitados (n, false);
+visitados[0] = true;
+vector<deque<Saving>> rutas;
+vector<int> noFactibles;
+/*Salida de prueba para savings*/
 while(!savings_pq.empty()){
-	deque<Saving> cluster;
+	
 	
 	Saving sav = savings_pq.top();
-	cluster.push(sav.i);
-	cluster.push(sav.j);
+	if(nodos[sav.i].demand + nodos[sav.j].demand > instance.getCapacity()){	//Saving descartado
+		savings_pq.pop();	
+		Saving sav = savings_pq.top();
+	}
+	if(!visitados[sav.i] && !visitados[sav.j]){
+		deque<Saving> cluster;
+		cluster.push(sav.i);
+		cluster.push(sav.j);
+		rutas.push_back(cluster);
+	}else if()
+	
 	cout << sav.s << endl;
 	savings_pq.pop();
 }
 
-*/
+
 
 return 0;
 }

@@ -51,6 +51,9 @@ public:
     /** Referencia inmutable al vector de nodos */
     const std::vector<Node> & getNodes() const;
 
+    /** Referencia inmutable a la capacidad */
+    const unsigned int & getCapacity() const;	
+
 private:
 
     /** Cant de nodos */

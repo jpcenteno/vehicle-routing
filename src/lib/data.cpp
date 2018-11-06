@@ -82,3 +82,7 @@ size_t Instance::size() const {
 const std::vector<Node> & Instance::getNodes() const {
     return nodes;
 }
+
+const unsigned int & Instance::getCapacity() const{
+    return capacity;	
+}
