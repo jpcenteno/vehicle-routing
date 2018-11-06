@@ -74,6 +74,7 @@ Instance::Instance() {
     // Por el enunciado, se toma el nodo 1 como el único deposito
     nodes[0].is_depot = true;
 
+
     initDistancesMatrix();
 
 
