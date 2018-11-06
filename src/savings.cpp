@@ -1,6 +1,3 @@
-#define Trabajo using
-#define Practico namespace
-#define III std;
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -19,7 +16,7 @@
 #include <math.h> 
 #include "lib/data.h"
 
-Trabajo Practico III
+using namespace std;
 
 void calcularDist(MatrizDist &grafo, vector<Node>& nodos){
     int n = nodos.size();
@@ -36,7 +33,7 @@ void calcularDist(MatrizDist &grafo, vector<Node>& nodos){
 }
 
 
-int main(){
+int FIXME_main(){
 
 //const Instance instance;
 
