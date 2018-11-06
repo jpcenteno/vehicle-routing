@@ -31,10 +31,11 @@ struct Saving{
 	}
 };
 
+/** Lista de caminos para la salida */
+typedef std::vector<std::vector<Node>> PathList;
 
-
-
-typedef std::vector<std::vector<int> > MatrizDist;
+/** Matriz distancias entre nodos */
+typedef std::vector<std::vector<float>> MatrizDist;
 
 
 /** Una instancia del problema a resolver */
@@ -51,8 +52,13 @@ public:
     /** Referencia inmutable al vector de nodos */
     const std::vector<Node> & getNodes() const;
 
+
     /** Referencia inmutable a la capacidad */
     const unsigned int & getCapacity() const;	
+
+    /** Devuelve la matriz de distancias */
+    const MatrizDist & getDistances() const;
+
 
 private:
 
@@ -64,6 +70,11 @@ private:
 
     /** nodos de la instancia */
     std::vector<Node> nodes;
+
+    std::vector<std::vector<float>> distances;
+
+    /** Inicializa la matriz distances */
+    void initDistancesMatrix();
 
 };
 

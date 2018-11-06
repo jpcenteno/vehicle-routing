@@ -57,7 +57,7 @@ for(int i = 0; i<n; i++){
 
 
 
-vector<bool> visitados (n, false);
+vector<int> visitados (n, -1);
 visitados[0] = true;
 vector<deque<Saving>> rutas;
 vector<int> noFactibles;
@@ -70,14 +70,38 @@ while(!savings_pq.empty()){
 		savings_pq.pop();	
 		Saving sav = savings_pq.top();
 	}
-	if(!visitados[sav.i] && !visitados[sav.j]){
+	if(visitados[sav.i] > -1 && visitados[sav.j] > -1){ //ver bien!
+		savings_pq.pop();	
+		Saving sav = savings_pq.top();
+	}
+	if(visitados[sav.i] == -1 && visitados[sav.j] == -1){
 		deque<Saving> cluster;
-		cluster.push(sav.i);
-		cluster.push(sav.j);
+		cluster.push_back(sav.i);
+		cluster.push_back(sav.j);
 		rutas.push_back(cluster);
-	}else if()
+		visitados[sav.i] = rutas.size()-1;
+		visitados[sav.j] = rutas.size()-1;
+	}else if(visitados[sav.i] > -1 && visitados[sav.j] == -1){
+		if(rutas[visitados[sav.i]].front() == sav.i){
+			rutas[visitados[sav.i]].push_front(sav.j);
+			visitados[sav.j] = visitados[sav.i];
 	
-	cout << sav.s << endl;
+		}else if(rutas[visitados[sav.i]].back() == sav.i){
+			rutas[visitados[sav.i]].push_back(sav.j);
+			visitados[sav.j] = visitados[sav.i];
+		}
+		
+	}else{
+		if(rutas[visitados[sav.j]].front() == sav.j){
+			rutas[visitados[sav.j]].push_front(sav.i);
+			visitados[sav.i] = visitados[sav.j];
+	
+		}else if(rutas[visitados[sav.j]].back() == sav.j){
+			rutas[visitados[sav.j]].push_back(sav.i);
+			visitados[sav.i] = visitados[sav.j];
+		}
+		
+	}
 	savings_pq.pop();
 }
 
