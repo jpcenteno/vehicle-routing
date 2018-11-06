@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include "data.h"
 
@@ -73,6 +74,9 @@ Instance::Instance() {
     // Por el enunciado, se toma el nodo 1 como el único deposito
     nodes[0].is_depot = true;
 
+    initDistancesMatrix();
+
+
 }
 
 size_t Instance::size() const {
@@ -81,4 +85,29 @@ size_t Instance::size() const {
 
 const std::vector<Node> & Instance::getNodes() const {
     return nodes;
+}
+
+void Instance::initDistancesMatrix() {
+
+    distances.resize(dimension);
+    for (auto &row : distances) {
+        row.resize(dimension);
+    }
+
+    for (size_t i = 0; i < dimension; ++i) {
+        for (size_t j = 0; j < dimension; ++j) {
+            float x_i = (float) nodes[i].x;
+            float y_i = (float) nodes[i].y;
+            float x_j = (float) nodes[j].x;
+            float y_j = (float) nodes[j].y;
+            distances[i][j] =
+                std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2));
+        }
+    }
+
+
+}
+
+const MatrizDist& Instance::getDistances() const {
+    return distances;
 }
