@@ -83,7 +83,8 @@ int FIXME_main(){
 			nro_ruta[sav.i] = rutas.size()-1;
 			nro_ruta[sav.j] = rutas.size()-1;
 		}else if(nro_ruta[sav.i] > -1 && nro_ruta[sav.j] == -1){
-
+			
+			
 			if (nodos[sav.j].demand + rutas[nro_ruta[sav.i]].capacidad > C) 
 				continue;
 
@@ -99,6 +100,7 @@ int FIXME_main(){
 		}else{
 			if (nodos[sav.i].demand + rutas[nro_ruta[sav.j]].capacidad > C) 
 				continue;
+
 			if(rutas[nro_ruta[sav.j]].camino.front() == sav.j){
 				rutas[nro_ruta[sav.j]].camino.push_front(sav.i);
 				nro_ruta[sav.i] = nro_ruta[sav.j];
