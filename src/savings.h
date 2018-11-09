@@ -4,10 +4,12 @@
 #include "lib/data.h"
 #include <deque>
 
+using namespace std;
+
 struct Ruta {
 	deque<Saving> camino;	
 	int capacidad; 
-} 
+}; 
 
 
 class Savings {
