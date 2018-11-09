@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <math.h>
 
 #include "data.h"
 
@@ -106,7 +107,7 @@ void Instance::initDistancesMatrix() {
             float x_j = (float) nodes[j].x;
             float y_j = (float) nodes[j].y;
             distances[i][j] =
-                std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2));
+                round(std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2)));  //agrugue el round de la libreria math.h
         }
     }
 

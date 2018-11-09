@@ -32,7 +32,7 @@ struct Saving{
 };
 
 /** Lista de caminos para la salida */
-typedef std::vector<std::vector<Node>> PathList;
+typedef std::vector<std::vector<Node>> PathList;     //Aca par imprimir la salida se imprimiria el valor entero del numero de nodo : vector<int> PathList
 
 /** Matriz distancias entre nodos */
 typedef std::vector<std::vector<float>> MatrizDist;
