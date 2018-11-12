@@ -7,8 +7,13 @@
 using namespace std;
 
 struct Ruta {
-	deque<Saving> camino;	
-	int capacidad; 
+	list<int> camino;	
+	unsigned int capacidad;
+
+	Ruta(int i, int j, unsigned int c) {
+		camino = {i, j};
+		capacidad = c;
+	} 
 }; 
 
 
