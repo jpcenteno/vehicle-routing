@@ -1,7 +1,21 @@
 #ifndef SRC_LIB_DATA_H
 #define SRC_LIB_DATA_H
 
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+#include <chrono>
+#include <tuple>
+#include <cstdlib>
+#include <fstream>
+#include <string>
+#include <utility>
+#include <list>
+#include <climits>
+#include <queue>
 #include <vector>
+#include <math.h>
 
 /** Datos de un nodo */
 struct Node {
@@ -24,15 +38,26 @@ struct Saving{
 
 	int i;
 	int j;
-	int s;
+	float s;
 
 	bool operator<(const Saving &a) const {
     		return s < a.s;
 	}
 };
 
+struct Angular{
+	Node p= Node(0,0,0,false);
+	float alfa = 0;
+
+	
+	bool operator>(const Angular &b) const{
+		return alfa > b.alfa;
+	}
+
+};
+
 /** Lista de caminos para la salida */
-typedef std::vector<std::vector<Node>> PathList;     //Aca par imprimir la salida se imprimiria el valor entero del numero de nodo : vector<int> PathList
+typedef std::pair<std::vector<std::vector<int>>, int> PathList;  //Es la pathList + costoTotal    
 
 /** Matriz distancias entre nodos */
 typedef std::vector<std::vector<float>> MatrizDist;

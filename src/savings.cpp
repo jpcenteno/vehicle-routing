@@ -1,18 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstdio>
-#include <cstdlib>
-#include <chrono>
-#include <tuple>
-#include <cstdlib>
-#include <fstream>
-#include <string>
-#include <utility>
-#include <list>
-#include <climits>
-#include <queue>
-#include <math.h> 
+ 
 
 #include "lib/data.h"
 #include "savings.h"
