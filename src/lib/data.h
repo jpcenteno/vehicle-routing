@@ -25,6 +25,8 @@ struct Node {
     unsigned int demand = 0;
     bool is_depot       = false;
 
+    Node() : x(0), y(0), demand(0), is_depot(false) {}
+
 	Node(int i, int j, unsigned int d, bool depot) {
 		x = i;
 		y = j;
@@ -34,7 +36,8 @@ struct Node {
 
 };
 
-struct Saving{
+/** Datos de un Saving para un par de nodos i, j */
+struct Saving {
 
 	int i;
 	int j;
@@ -43,25 +46,26 @@ struct Saving{
 	bool operator<(const Saving &a) const {
     		return s < a.s;
 	}
+
 };
 
-struct Angular{
-	Node p= Node(0,0,0,false);
+/** Angulos de los nodos con respecto al deposito */
+struct Angular {
+
+	Node p;
 	float alfa = 0;
 
-	
-	bool operator>(const Angular &b) const{
+	bool operator>(const Angular &b) const {
 		return alfa > b.alfa;
 	}
 
 };
 
-/** Lista de caminos para la salida */
-typedef std::pair<std::vector<std::vector<int>>, int> PathList;  //Es la pathList + costoTotal    
+/** Lista de caminos y costo total para la salida */
+typedef std::pair<std::vector<std::vector<int>>, int> PathList;    
 
 /** Matriz distancias entre nodos */
 typedef std::vector<std::vector<float>> MatrizDist;
-
 
 /** Una instancia del problema a resolver */
 class Instance {
@@ -77,13 +81,11 @@ public:
     /** Referencia inmutable al vector de nodos */
     const std::vector<Node> & getNodes() const;
 
-
     /** Referencia inmutable a la capacidad */
     const unsigned int & getCapacity() const;	
 
     /** Devuelve la matriz de distancias */
     const MatrizDist & getDistances() const;
-
 
 private:
 
@@ -96,6 +98,7 @@ private:
     /** nodos de la instancia */
     std::vector<Node> nodes;
 
+    /** Matriz de distancias */
     std::vector<std::vector<float>> distances;
 
     /** Inicializa la matriz distances */

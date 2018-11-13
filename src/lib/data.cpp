@@ -39,7 +39,7 @@ Instance::Instance() {
 
         } else if (findKeyword(line, "CAPACITY")) {
 
-            std::sscanf(line.data()+11, "%d", &capacity);
+            std::sscanf(line.data()+11, "%u", &capacity);
 
         } else if ( findKeyword(line, "NODE_COORD_SECTION") ) {
 
@@ -90,8 +90,9 @@ const std::vector<Node> & Instance::getNodes() const {
 }
 
 
-const unsigned int & Instance::getCapacity() const{
+const unsigned int & Instance::getCapacity() const {
     return capacity;	
+}
 
 void Instance::initDistancesMatrix() {
 
