@@ -1,5 +1,3 @@
- 
-
 #include "lib/data.h"
 #include "savings.h"
 
@@ -9,7 +7,7 @@ PathList Savings::operator()(const Instance& instance) const {
 	int n = instance.size();
     MatrizDist dist = instance.getDistances();
 	vector<Node> nodos = instance.getNodes();
-	int C = instance.getCapacity();
+	unsigned int C = instance.getCapacity();
 
 	// Max-heap de savings
 	priority_queue<Saving, vector<Saving>> savings_pq;
@@ -130,13 +128,20 @@ PathList Savings::operator()(const Instance& instance) const {
 	}
 
 	PathList result;
-
-	/*
-	TODO: Generar el PathList
+	result.second = 0;
+	
+	int last;
 	for (auto r : rutas) {
-		result.push_back({std::begin(r.camino), std::end(r.camino)});
+		last = 0;
+		vector<int> ruta;
+		for (auto nodo : r.camino) {
+			ruta.push_back(nodo);
+			result.second += dist[last][nodo];
+			last = nodo;
+		}
+		result.first.push_back(ruta);
+		result.second += dist[last][0];
 	}
-	*/
 
 	return result;
 }
