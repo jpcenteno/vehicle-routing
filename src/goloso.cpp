@@ -2,7 +2,7 @@
 
 
 PathList Goloso::operator()(const Instance& instance) const { 
-	vector<vector<int>> rutas;
+	PathList rutas;
 	int n = instance.size();
 	vector<Node> nodos = instance.getNodes();
 	MatrizDist dist = instance.getDistances();
@@ -40,9 +40,13 @@ PathList Goloso::operator()(const Instance& instance) const {
 	
 		costo += dist[camino.back()][0];
 		camino.push_back(0);
-		rutas.push_back(camino);
+		rutas.first.push_back(camino);
 	
 	}
+		
+		rutas.second = costo;
+		return rutas;
+		
 		/*Salida de Prueba*/
 		/*cout << rutas.size() << endl;
 		for(int i= 0; i<rutas.size();i++){
