@@ -1,9 +1,9 @@
-
-#include "lib/data.h"
-using namespace std;
+#include "sweep_tspGoloso.h"
 
 
-vector<vector<Node>> sweep(vector<Node>& nodos, int C){
+
+
+vector<vector<Node>> sweep(const vector<Node>& nodos, int C){
 	vector<vector<Node>> clusteres;	
 	int n = nodos.size();
 	int carga = 0;
@@ -56,7 +56,7 @@ vector<vector<Node>> sweep(vector<Node>& nodos, int C){
 }
 
 
-pair<vector<int>, int> tspGoloso(vector<Node>& cluster){
+pair<vector<int>, int> Sweep::tspGoloso(vector<Node>& cluster, const Instance & instance) const{
 	int n = instance.size();
 	MatrizDist dist = instance.getDistances();
 	vector<bool> visitados(n, false); 
@@ -88,14 +88,13 @@ pair<vector<int>, int> tspGoloso(vector<Node>& cluster){
 	return {camino, costo};	
 }
 
-
-
-PathList ruteo(vector<vector<Node> >& clusteres){
+ 
+PathList Sweep::ruteo(vector<vector<Node> >& clusters, const Instance& instance) const{
 	PathList rutas;
 	rutas.second = 0;
 	pair<vector<int>, int> tsp;
-	for (int i = 0; i < clusteres.size(); ++i) {
-		tsp = tspGoloso(clusteres[i]); 	
+	for (int i = 0; i < clusters.size(); ++i) {
+		tsp = tspGoloso(clusters[i], instance); 	
 		rutas.first.push_back(tsp.first);
 		rutas.second += tsp.second; 
 	}
@@ -103,5 +102,12 @@ PathList ruteo(vector<vector<Node> >& clusteres){
 }
 	
 
+PathList Sweep::operator()(const Instance& instance) const {
+	vector<vector<Node>> clusters = sweep(instance.getNodes(), instance.getCapacity());
+	PathList res = ruteo(clusters, instance);
+	return res;
+}
 
-
+int main(){
+return 0;
+}
