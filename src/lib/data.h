@@ -1,5 +1,10 @@
-#ifndef SRC_LIB_DATA_H
-#define SRC_LIB_DATA_H
+//
+// Created by silvia on 18/11/18.
+//
+
+#ifndef UNTITLED_DATA_H
+#define UNTITLED_DATA_H
+
 
 #include <iostream>
 #include <algorithm>
@@ -27,42 +32,44 @@ struct Node {
 
     Node() : x(0), y(0), demand(0), is_depot(false) {}
 
-	Node(int i, int j, unsigned int d, bool depot) {
-		x = i;
-		y = j;
-		demand = d;
-		is_depot = depot;	
-	}
+    Node(int i, int j, unsigned int d, bool depot) {
+        x = i;
+        y = j;
+        demand = d;
+        is_depot = depot;
+    }
 
 };
 
 /** Datos de un Saving para un par de nodos i, j */
 struct Saving {
 
-	int i;
-	int j;
-	float s;
+    int i;
+    int j;
+    float s;
 
-	bool operator<(const Saving &a) const {
-    		return s < a.s;
-	}
+    bool operator<(const Saving &a) const {
+        return s < a.s;
+    }
 
 };
 
 /** Angulos de los nodos con respecto al deposito */
 struct Angular {
 
-	Node p;
-	float alfa = 0;
+    Node p;
+    long double alfa = 0;
+    int id = 0;
 
-	bool operator>(const Angular &b) const {
-		return alfa > b.alfa;
-	}
+
+    bool operator>(const Angular &b) const {
+        return alfa > b.alfa;
+    }
 
 };
 
 /** Lista de caminos y costo total para la salida */
-typedef std::pair<std::vector<std::vector<int>>, int> PathList;    
+typedef std::pair<std::vector<std::vector<int>>, int> PathList;
 
 /** Matriz distancias entre nodos */
 typedef std::vector<std::vector<float>> MatrizDist;
@@ -82,7 +89,7 @@ public:
     const std::vector<Node> & getNodes() const;
 
     /** Referencia inmutable a la capacidad */
-    const unsigned int & getCapacity() const;	
+    const unsigned int & getCapacity() const;
 
     /** Devuelve la matriz de distancias */
     const MatrizDist & getDistances() const;
@@ -106,4 +113,7 @@ private:
 
 };
 
-#endif // SRC_LIB_DATA_H
+
+
+#endif //UNTITLED_DATA_H
+

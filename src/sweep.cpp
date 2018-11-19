@@ -1,4 +1,27 @@
-#include "sweep_tspGoloso.h"
+#include "data.h"
+
+
+using namespace std;
+
+typedef std::vector<std::vector<int>> Dist;
+
+Dist initDistancesMatrix(std::vector<Node>& nodos) {
+    int n = nodos.size();
+    Dist distances(n,std::vector<int>(n,0));
+
+    for (size_t i = 0; i < n; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            float x_i = (float) nodos[i].x;
+            float y_i = (float) nodos[i].y;
+            float x_j = (float) nodos[j].x;
+            float y_j = (float) nodos[j].y;
+            distances[i][j] =
+                    (int) round(std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2)));  //agrugue el round de la libreria math.h
+        }
+    }
+
+    return distances;
+}
 
 
 std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
@@ -57,8 +80,11 @@ std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
     return clusteres;
 }
 
-pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dist){
-	int n = cluster.size();
+
+
+std::pair<std::vector<int>, int> tspGoloso(std::vector<Angular>& cluster, Dist& dist) {
+
+    int n = cluster.size();
     vector<bool> visitados(n, false);
     int cant_nodos = 0;
     int costo = 0;
@@ -74,12 +100,13 @@ pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dis
         min = INT_MAX;
         i = indice_min;
 
-        for(int j=0; j<n; j++) {
-            if (cluster[i].id != cluster[j].id && !visitados[j] && dist[cluster[i].id][cluster[j].id] < min) {
+        for(int j=0; j<n; j++){
+            if(cluster[i].id != cluster[j].id && !visitados[j] && dist[cluster[i].id][cluster[j].id] < min){
                 min = dist[cluster[i].id][cluster[j].id];
                 indice_min = j;
             }
         }
+        camino.push_back(cluster[indice_min].id);
     }
 
     costo += dist[camino.back()][0];
@@ -89,7 +116,9 @@ pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dis
 }
 
 
-PathList ruteo(vector<vector<Angular> >& clusters, const vector<Node>& nodos, const MatrizDist& dist){
+
+PathList ruteo(std::vector<vector<Angular> >& clusters, std::vector<Node>& nodos){
+    Dist dist = initDistancesMatrix(nodos);
     PathList rutas;
     rutas.second = 0;
     pair<vector<int>, int> tsp;
@@ -100,24 +129,32 @@ PathList ruteo(vector<vector<Angular> >& clusters, const vector<Node>& nodos, co
     }
     return rutas;
 }
-	
 
-PathList Sweep::operator()(const Instance& instance) const {
-	vector<vector<Angular>> clusters = sweep(instance.getNodes(), instance.getCapacity());
-	PathList res = ruteo(clusters, instance.getNodes(), instance.getDistances());
-	return res;
+
+
+PathList rutear(std::vector<Node>& nodos, int C) {
+    vector<vector<Angular>> clusters = sweep(nodos, C);
+    PathList res = ruteo(clusters, nodos);
+    return res;
 }
 
-/* Salida dado un pathlist*/
-/* PathList res <- sweep;
+int main(){
+
+    int C= 100;
+
+    vector<Node> nodos = {{40,40,0,true},{50,40,60,false},{45,45,20,false},{55,50,120,false},{40,55,15,false},{35,45,10,false},{35,40,30,false},{35,30,70,false},{40,20,5,false},{45,30,5,false}};
+
+    PathList res = rutear(nodos, C);
     cout<< res.first.size() << endl;
 
     for(int i=0; i<res.first.size(); i++){
-        int tam_i = (res.first)[i].size();
-        for(int j = 0;j < tam_i; j++){
-            cout << (res.first)[i][j] << " ";
+        for(int j = 0; res.first[i].size(); j++){
+            cout << res.first[i][j] << " ";
         }
         cout << endl;
     }
-    cout << res.second << endl;
-*/
+    cout << "costo total" << res.second << endl;
+
+
+    return 0;
+}
