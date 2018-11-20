@@ -22,6 +22,9 @@
 #include <vector>
 #include <math.h>
 
+using namespace std;
+
+
 /** Datos de un nodo */
 struct Node {
 
@@ -113,7 +116,6 @@ private:
 
 };
 
-
+typedef function<PathList (const Instance&)> Algorithm;
 
 #endif //UNTITLED_DATA_H
-
