@@ -1,10 +1,10 @@
 #include "sweep_tspGoloso.h"
 
 
-std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
+std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, uint C){
     std::vector<std::vector<Angular>> clusteres;
-    int n = nodos.size();
-    int carga = 0;
+    size_t n = nodos.size();
+    unsigned int carga = 0;
     long double alfa;
 
     /*vector<Angular> es la estructura sobre la que se arma la priority queue*/
@@ -12,7 +12,7 @@ std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
     Angular punto;
     Angular deposito;
     deposito.p = nodos[0];   //Lo demas esta seteado en el struct alfa = 0, id =0
-    for(uint i = 1; i<n; i++){
+    for(size_t i = 1; i<n; i++){
         int dif_x = nodos[i].x - nodos[0].x;
         int dif_y = nodos[i].y - nodos[0].y;
         alfa = atan2(dif_y, dif_x);
@@ -57,15 +57,15 @@ std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
     return clusteres;
 }
 
-pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dist){
-	int n = cluster.size();
+pair<vector<size_t>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dist){
+	size_t n = cluster.size();
     vector<bool> visitados(n, false);
-    int cant_nodos = 0;
+    size_t cant_nodos = 0;
     int costo = 0;
-    int indice_min = cluster.size() - 1; //El deposito se agrego siempre como ultimo elemento del cluster
-    int min = 0;
-    int i;
-    std::vector<int> camino;
+    size_t indice_min = cluster.size() - 1; //El deposito se agrego siempre como ultimo elemento del cluster
+    float min = 0;
+    size_t i;
+    std::vector<size_t> camino;
     while(cant_nodos < n){
         camino.push_back(cluster[indice_min].id);
         visitados[indice_min] = true;
@@ -74,7 +74,7 @@ pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dis
         min = INT_MAX;
         i = indice_min;
 
-        for(int j=0; j<n; j++) {
+        for(size_t j=0; j<n; j++) {
             if (cluster[i].id != cluster[j].id && !visitados[j] && dist[cluster[i].id][cluster[j].id] < min) {
                 min = dist[cluster[i].id][cluster[j].id];
                 indice_min = j;
@@ -89,11 +89,11 @@ pair<vector<int>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& dis
 }
 
 
-PathList ruteo(vector<vector<Angular> >& clusters, const vector<Node>& nodos, const MatrizDist& dist){
+PathList ruteo(vector<vector<Angular> >& clusters, const MatrizDist& dist){
     PathList rutas;
     rutas.second = 0;
-    pair<vector<int>, int> tsp;
-    for (int i = 0; i < clusters.size(); ++i) {
+    pair<vector<size_t>, int> tsp;
+    for (size_t i = 0; i < clusters.size(); ++i) {
         tsp = tspGoloso(clusters[i], dist);
         rutas.first.push_back(tsp.first);
         rutas.second += tsp.second;
@@ -104,7 +104,7 @@ PathList ruteo(vector<vector<Angular> >& clusters, const vector<Node>& nodos, co
 
 PathList Sweep::operator()(const Instance& instance) const {
 	vector<vector<Angular>> clusters = sweep(instance.getNodes(), instance.getCapacity());
-	PathList res = ruteo(clusters, instance.getNodes(), instance.getDistances());
+	PathList res = ruteo(clusters, instance.getDistances());
 	return res;
 }
 

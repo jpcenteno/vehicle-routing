@@ -7,10 +7,10 @@
 using namespace std;
 
 struct Ruta {
-	list<int> camino;	
+	list<size_t> camino;
 	unsigned int capacidad;
 
-	Ruta(int i, int j, unsigned int c) {
+	Ruta(size_t i, size_t j, unsigned int c) {
 		camino = {i, j};
 		capacidad = c;
 	} 

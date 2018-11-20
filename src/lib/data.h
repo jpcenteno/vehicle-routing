@@ -44,8 +44,8 @@ struct Node {
 /** Datos de un Saving para un par de nodos i, j */
 struct Saving {
 
-    int i;
-    int j;
+    size_t i;
+    size_t j;
     float s;
 
     bool operator<(const Saving &a) const {
@@ -59,7 +59,7 @@ struct Angular {
 
     Node p;
     long double alfa = 0;
-    int id = 0;
+    size_t id = 0;
 
 
     bool operator>(const Angular &b) const {
@@ -69,7 +69,7 @@ struct Angular {
 };
 
 /** Lista de caminos y costo total para la salida */
-typedef std::pair<std::vector<std::vector<int>>, int> PathList;
+typedef std::pair<std::vector<std::vector<size_t>>, int> PathList;
 
 /** Matriz distancias entre nodos */
 typedef std::vector<std::vector<float>> MatrizDist;

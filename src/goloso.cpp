@@ -41,7 +41,7 @@ PathList Goloso::operator()(const Instance& instance) const {
 	
 		costo += dist[camino.back()][0];
 		camino.push_back(0);
-		rutas.first.push_back(camino);
+		(rutas.first).push_back(camino);
 	
 	}
 		
