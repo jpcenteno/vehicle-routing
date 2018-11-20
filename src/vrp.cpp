@@ -6,33 +6,57 @@
 #include "goloso.h"
 
 
+
+int getAlgorithm(const string& name, Algorithm& a) {
+    if (name == "savings") {
+        a = Savings();
+    } else if (name == "goloso") {
+        a = Goloso();
+    } else {
+        return 0;
+    }
+    return 1;
+}
+
+void printPathList(const PathList& pl) {
+
+    cout << pl.first.size() << endl;
+
+    int route = 1;
+    for (auto r :  pl.first) {
+        cout << "#" << (route++) << ": ";
+        for (size_t i = 0; i < r.size(); ++i) {
+            cout << r[i] << " ";
+        }
+        cout << "\n";
+    }
+
+    cout << pl.second << "\n";
+}
+
 int main(int argc, char * argv[]) {
 
     // CLI
     CLI::App app {"TP3 - Aed3"};
 
-    std::string algorithm;
-    app.add_option("-a,--algo", algorithm,
-            "algoritmo. Puede ser `savings`");
+    std::string algorithm_name;
+    app.add_option("-a,--algo", algorithm_name,
+            "algoritmo. Puede ser `savings`, `goloso`")
+       ->required()
+       ->expected(1);
 
     CLI11_PARSE(app, argc, argv);
+
+    Algorithm algo;
+    getAlgorithm(algorithm_name, algo);
 
     // Lee STDIN
     const Instance instance;
 
-   	const Savings solve_savings;
-   	const PathList result = solve_savings(instance);
+    // Ejecuta el algoritmo
+    const PathList result = algo(instance);
 
-   	cout << result.first.size() << endl;
-	int route = 1;
-	for (auto r :  result.first) {
-		cout << "#" << (route++) << ": ";
-		for (size_t i = 0; i < r.size(); ++i) {
-			cout << r[i] << " ";
-		}
-		cout << "\n";
-	}
-	cout << result.second << "\n";
+    printPathList(result);
 
     return 0;
 
