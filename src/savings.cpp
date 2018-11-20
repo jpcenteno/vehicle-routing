@@ -4,7 +4,7 @@
 PathList Savings::operator()(const Instance& instance) const {
 
 	// Datos de la instancia
-	int n = instance.size();
+	size_t n = instance.size();
     MatrizDist dist = instance.getDistances();
 	vector<Node> nodos = instance.getNodes();
 	unsigned int C = instance.getCapacity();
@@ -13,8 +13,8 @@ PathList Savings::operator()(const Instance& instance) const {
 	priority_queue<Saving, vector<Saving>> savings_pq;
 
 	// Savings
-	for (int i = 1; i < n; i++) {
-		for(int j = i + 1; j < n; j++) {
+	for (size_t i = 1; i < n; i++) {
+		for(size_t j = i + 1; j < n; j++) {
 			savings_pq.push({i, j, dist[i][0] + dist[0][j] - dist[i][j]}); // i, j, saving
 		}	
 	}
@@ -24,7 +24,7 @@ PathList Savings::operator()(const Instance& instance) const {
 	vector<list<Ruta>::iterator> it_ruta(n, rutas.end()); // it_ruta[i] = iterador a la ruta de la ciudad i
 
 	// Control de ciudades visitadas
-	int ciudades_visitadas = 1;
+	size_t ciudades_visitadas = 1;
 	vector<bool> visitada(n, false);
 	visitada[0] = true;
 
@@ -32,8 +32,8 @@ PathList Savings::operator()(const Instance& instance) const {
 		Saving sav = savings_pq.top();
 		savings_pq.pop();
 
-		int i = sav.i;
-		int j = sav.j;
+		size_t i = sav.i;
+		size_t j = sav.j;
 
 		// Saving descartado
 		if (nodos[i].demand + nodos[j].demand > C) continue;
@@ -83,11 +83,11 @@ PathList Savings::operator()(const Instance& instance) const {
 			// La unión de rutas supera la capacidad de un camión
 			if (ruta_i->capacidad + ruta_j->capacidad > C) continue;
 
-			int front_i = ruta_i->camino.front();
-			int back_i = ruta_i->camino.back();
+			size_t front_i = ruta_i->camino.front();
+			size_t back_i = ruta_i->camino.back();
 
-			int front_j = ruta_j->camino.front();
-			int back_j = ruta_j->camino.back();
+			size_t front_j = ruta_j->camino.front();
+			size_t back_j = ruta_j->camino.back();
 
 			if (front_i == i && front_j == j) {
 				ruta_i->camino.insert(ruta_i->camino.begin(), ruta_j->camino.rbegin(), ruta_j->camino.rend());
@@ -130,10 +130,10 @@ PathList Savings::operator()(const Instance& instance) const {
 	PathList result;
 	result.second = 0;
 	
-	int last;
+	size_t last;
 	for (auto r : rutas) {
 		last = 0;
-		vector<int> ruta;
+		vector<size_t> ruta;
 		for (auto nodo : r.camino) {
 			ruta.push_back(nodo);
 			result.second += dist[last][nodo];

@@ -46,7 +46,7 @@ Instance::Instance() {
             for ( size_t i = 0; i < dimension; ++i) {
 
                 size_t id;
-                unsigned int x, y;
+                int x, y;
                 std::cin >> id >> x >> y;
 
                 nodes[id - 1].x = x;
@@ -107,8 +107,8 @@ void Instance::initDistancesMatrix() {
             float y_i = (float) nodes[i].y;
             float x_j = (float) nodes[j].x;
             float y_j = (float) nodes[j].y;
-            distances[i][j] =
-                round(std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2)));  //agrugue el round de la libreria math.h
+            distances[i][j] = static_cast<float>(
+                    round(std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2))));
         }
     }
 
