@@ -20,19 +20,19 @@ int main(int argc, char * argv[]) {
     // Lee STDIN
     const Instance instance;
 
-   	const Savings solve_savings;
-   	const PathList result = solve_savings(instance);
+    const Savings solve_savings;
+    const PathList result = solve_savings(instance);
 
-   	cout << result.first.size() << endl;
-	int route = 1;
-	for (auto r :  result.first) {
-		cout << "#" << (route++) << ": ";
-		for (size_t i = 0; i < r.size(); ++i) {
-			cout << r[i] << " ";
-		}
-		cout << "\n";
-	}
-	cout << result.second << "\n";
+    cout << result.first.size() << endl;
+    int route = 1;
+    for (auto r :  result.first) {
+        cout << "#" << (route++) << ": ";
+        for (size_t i = 0; i < r.size(); ++i) {
+            cout << r[i] << " ";
+        }
+        cout << "\n";
+    }
+    cout << result.second << "\n";
 
     return 0;
 
