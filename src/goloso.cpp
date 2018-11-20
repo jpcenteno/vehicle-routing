@@ -3,23 +3,24 @@
 
 PathList Goloso::operator()(const Instance& instance) const { 
 	PathList rutas;
-	int n = instance.size();
+	size_t n = instance.size();
 	vector<Node> nodos = instance.getNodes();
 	MatrizDist dist = instance.getDistances();
 	vector<bool> visitados(n, false); 
-	int cant_nodos = 1;
+	size_t cant_nodos = 1;
 	int costo = 0;
-	int carga;
-	int indice_min, min, i;
-	int C = instance.getCapacity();
+	unsigned int carga;
+	size_t indice_min, i;
+    float min;
+	unsigned int C = instance.getCapacity();
 
 
 	while(cant_nodos < n){
-		vector<int> camino;
+		vector<size_t> camino;
 		carga = 0;
 		indice_min = 0;
 		min = 0;
-		while(((carga + nodos[indice_min].demand) <= C) && (cant_nodos < n)){ 
+		while(((carga + nodos[indice_min].demand) <= static_cast<unsigned int>(C)) && (cant_nodos < n)){ 
 			carga += nodos[indice_min].demand;
 			camino.push_back(indice_min);
 			visitados[indice_min] = true;
@@ -29,7 +30,7 @@ PathList Goloso::operator()(const Instance& instance) const {
 			min = INT_MAX;
 			i = indice_min;
 
-			for(int j=0; j<n; j++){
+			for(size_t j=0; j<n; j++){
 				if(i != j && !visitados[j] && dist[i][j] < min){
 					min = dist[i][j];
 					indice_min = j;

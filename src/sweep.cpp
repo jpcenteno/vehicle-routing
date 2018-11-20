@@ -1,4 +1,5 @@
-#include "data.h"
+#include <cmath>
+#include "lib/data.h"
 
 
 using namespace std;
@@ -6,7 +7,7 @@ using namespace std;
 typedef std::vector<std::vector<int>> Dist;
 
 Dist initDistancesMatrix(std::vector<Node>& nodos) {
-    int n = nodos.size();
+    size_t n = nodos.size();
     Dist distances(n,std::vector<int>(n,0));
 
     for (size_t i = 0; i < n; ++i) {
@@ -24,9 +25,9 @@ Dist initDistancesMatrix(std::vector<Node>& nodos) {
 }
 
 
-std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
+std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, unsigned int C){
     std::vector<std::vector<Angular>> clusteres;
-    int n = nodos.size();
+    size_t n = nodos.size();
     int carga = 0;
     long double alfa;
 
@@ -35,7 +36,7 @@ std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
     Angular punto;
     Angular deposito;
     deposito.p = nodos[0];   //Lo demas esta seteado en el struct alfa = 0, id =0
-    for(uint i = 1; i<n; i++){
+    for(size_t i = 1; i<n; i++){
         int dif_x = nodos[i].x - nodos[0].x;
         int dif_y = nodos[i].y - nodos[0].y;
         alfa = atan2(dif_y, dif_x);
@@ -84,9 +85,9 @@ std::vector<std::vector<Angular>> sweep(const std::vector<Node>& nodos, int C){
 
 std::pair<std::vector<int>, int> tspGoloso(std::vector<Angular>& cluster, Dist& dist) {
 
-    int n = cluster.size();
+    size_t n = cluster.size();
     vector<bool> visitados(n, false);
-    int cant_nodos = 0;
+    size_t cant_nodos = 0;
     int costo = 0;
     int indice_min = cluster.size() - 1; //El deposito se agrego siempre como ultimo elemento del cluster
     int min = 0;
@@ -100,7 +101,7 @@ std::pair<std::vector<int>, int> tspGoloso(std::vector<Angular>& cluster, Dist& 
         min = INT_MAX;
         i = indice_min;
 
-        for(int j=0; j<n; j++){
+        for(size_t j=0; j<n; j++){
             if(cluster[i].id != cluster[j].id && !visitados[j] && dist[cluster[i].id][cluster[j].id] < min){
                 min = dist[cluster[i].id][cluster[j].id];
                 indice_min = j;
@@ -122,7 +123,7 @@ PathList ruteo(std::vector<vector<Angular> >& clusters, std::vector<Node>& nodos
     PathList rutas;
     rutas.second = 0;
     pair<vector<int>, int> tsp;
-    for (int i = 0; i < clusters.size(); ++i) {
+    for (size_t i = 0; i < clusters.size(); ++i) {
         tsp = tspGoloso(clusters[i], dist);
         rutas.first.push_back(tsp.first);
         rutas.second += tsp.second;
@@ -147,8 +148,8 @@ int main(){
     PathList res = rutear(nodos, C);
     cout<< res.first.size() << endl;
 
-    for(int i=0; i<res.first.size(); i++){
-        for(int j = 0; res.first[i].size(); j++){
+    for(size_t i=0; i<res.first.size(); i++){
+        for(size_t j = 0; res.first[i].size(); j++){
             cout << res.first[i][j] << " ";
         }
         cout << endl;
