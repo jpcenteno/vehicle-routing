@@ -31,18 +31,21 @@ PathList Goloso::operator()(const Instance& instance) const {
 			i = indice_min;
 
 			for(size_t j=0; j<n; j++){
-				if(i != j && !visitados[j] && dist[i][j] < min){
+				if(i != j && !visitados[j] && dist[i][j] < min && nodos[j].demand <= C){
 					min = dist[i][j];
 					indice_min = j;
 
+				}else if(nodos[j].demand > C){		//si era infactible lo pongo como vistado para no volverlo a visitar otra vez.
+					visitados[j] = true;
 				}
 			}
 		} 
 	
 		costo += dist[camino.back()][0];
 		camino.push_back(0);
-		rutas.first.push_back(camino);
-	
+		if(camino.size() > 2){		//Evito agregar caminos de tipo (0,0) cuando en el medio hubo infactibles por ejemplo.
+			rutas.first.push_back(camino);
+		}	
 	}
 		
 		rutas.second = costo;
