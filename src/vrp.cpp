@@ -41,7 +41,7 @@ int main(int argc, char * argv[]) {
 
     std::string algorithm_name;
     app.add_option("-a,--algo", algorithm_name,
-            "algoritmo. Puede ser `savings`")
+            "algoritmo. Puede ser `savings`, `goloso`")
        ->required()
        ->expected(1);
 
