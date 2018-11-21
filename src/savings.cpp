@@ -24,7 +24,8 @@ PathList Savings::operator()(const Instance& instance) const {
 	vector<list<Ruta>::iterator> it_ruta(n); // it_ruta[i] = iterador a la ruta de la ciudad i O(n)
 
 	for (size_t i = 1; i < n; ++i) {
-		it_ruta[i] = rutas.insert(rutas.end(), {i, nodos[i].demand});
+		if (nodos[i].demand <= C)
+			it_ruta[i] = rutas.insert(rutas.end(), {i, nodos[i].demand});
 	}
 
 	// Control de ciudades visitadas
