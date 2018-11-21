@@ -10,8 +10,8 @@ struct Ruta {
 	list<size_t> camino;
 	unsigned int capacidad;
 
-	Ruta(size_t i, size_t j, unsigned int c) {
-		camino = {i, j};
+	Ruta(size_t i, unsigned int c) {
+		camino = {i};
 		capacidad = c;
 	} 
 }; 
