@@ -8,14 +8,14 @@
 	Output:
 		- Costo de la ruta
 */
-float TwoOpt::costo_ruta(vector<size_t>& ruta, MatrizDist& dist) const {
+float TwoOpt::costo_ruta(const vector<size_t>& ruta, const MatrizDist& dist) const {
 	size_t last = 0;
 	float costo = 0;
-	for (size_t i = 0; i < ruta.size(); ++i) { 
+	for (size_t i = 1; i < ruta.size(); ++i) { 
 		costo += dist[last][ruta[i]];
 		last = ruta[i];
 	}
-	costo += dist[last][0];
+
 	return costo;
 }
 
@@ -27,13 +27,15 @@ float TwoOpt::costo_ruta(vector<size_t>& ruta, MatrizDist& dist) const {
 	Output:
 		- Ruta con los nodos intercambiados tal que nueva_ruta = [0, 1, ... , j, j - 1, ... , i + 1, i, ... , n - 1]
 */
-vector<size_t> TwoOpt::swap_nodos(int i, int j, vector<size_t>& ruta) const {
+vector<size_t> TwoOpt::swap_nodos(int i, int j, const vector<size_t>& ruta) const {
 	vector<size_t> nueva_ruta;
 	int n = ruta.size();
 
-	for (int k = 0; k < i; ++k) nueva_ruta.push_back(ruta[k]);
+	nueva_ruta.push_back(0);
+	for (int k = 1; k < i; ++k) nueva_ruta.push_back(ruta[k]);
 	for (int k = j; k >= i; --k) nueva_ruta.push_back(ruta[k]);
-	for (int k = j + 1; k < n; ++k) nueva_ruta.push_back(ruta[k]);
+	for (int k = j + 1; k < n - 1; ++k) nueva_ruta.push_back(ruta[k]);
+	nueva_ruta.push_back(0);
 
 	return nueva_ruta;
 }
@@ -46,7 +48,7 @@ vector<size_t> TwoOpt::swap_nodos(int i, int j, vector<size_t>& ruta) const {
  	Output:
  		- Costo de la ruta mejorada (si es posible)
 */
-float TwoOpt::two_opt(vector<size_t>& ruta, MatrizDist& dist) const {
+float TwoOpt::two_opt(vector<size_t>& ruta, const MatrizDist& dist) const {
 	size_t n = ruta.size();
 	float mejor_costo = 0;
 	bool hay_mejora = true;
@@ -54,8 +56,8 @@ float TwoOpt::two_opt(vector<size_t>& ruta, MatrizDist& dist) const {
 	while (hay_mejora) {
 		hay_mejora = false;
 		mejor_costo = costo_ruta(ruta, dist);
-		for (size_t i = 0; i < n; ++i) {
-			for (size_t j = i + 1; j < n; ++j) {
+		for (size_t i = 1; i < n - 1; ++i) {
+			for (size_t j = i + 1; j < n - 1; ++j) {
 				vector<size_t> nueva_ruta = swap_nodos(i, j, ruta);
 				float nuevo_costo = costo_ruta(nueva_ruta, dist);
 				if (nuevo_costo < mejor_costo) {
