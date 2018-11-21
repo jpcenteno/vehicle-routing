@@ -21,6 +21,7 @@
 #include <queue>
 #include <vector>
 #include <math.h>
+#include <functional>
 
 using namespace std;
 
