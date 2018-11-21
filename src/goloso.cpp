@@ -31,14 +31,16 @@ PathList Goloso::operator()(const Instance& instance) const {
 			i = indice_min;
 
 			for(size_t j=0; j<n; j++){
-				if(i != j && !visitados[j] && dist[i][j] < min && nodos[j].demand <= C){
-					min = dist[i][j];
-					indice_min = j;
-
-				}else if(nodos[j].demand > C){		//si era infactible lo pongo como vistado para no volverlo a visitar otra vez.
-					visitados[j] = true;
-				}
-			}
+				/*si era infactible lo pongo como visitado para no volverlo a visitar otra vez*/
+                if(nodos[j].demand > C && !visitados[j]){		
+                    visitados[j] = true;
+                    cant_nodos++;
+                }
+                if(i != j && !visitados[j] && dist[i][j] < min){
+                    min = dist[i][j];
+                    indice_min = j;
+                }
+            }
 		} 
 	
 		costo += dist[camino.back()][0];
