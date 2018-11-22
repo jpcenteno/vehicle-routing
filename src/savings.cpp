@@ -75,12 +75,12 @@ PathList Savings::operator()(const Instance& instance) const {
 			rutas.erase(ruta_j);
 		}
 
-		if (!visitada[i] && it_ruta[i] != rutas.end()) {
+		if (!visitada[i] && (it_ruta[i]->camino).size() > 1) {
 			visitada[i] = true;
 			ciudades_visitadas++; 
 		}
 
-		if (!visitada[j] && it_ruta[j] != rutas.end()) {
+		if (!visitada[j] && (it_ruta[j]->camino).size() > 1) {
 			visitada[j] = true;
 			ciudades_visitadas++; 
 		}
