@@ -14,7 +14,9 @@ PathList Savings::operator()(const Instance& instance) const {
 
 	// Savings O(n^2*log(n))
 	for (size_t i = 1; i < n; i++) {
+		if (nodos[i].demand > C) continue;
 		for(size_t j = i + 1; j < n; j++) {
+			if (nodos[j].demand > C) continue;
 			savings_pq.push({i, j, dist[i][0] + dist[0][j] - dist[i][j]}); // i, j, saving
 		}	
 	}
