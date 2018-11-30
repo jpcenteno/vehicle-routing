@@ -23,11 +23,10 @@ SAPath::SAPath(const Instance& in, vector<NodeId> path) {
     copy(begin(path), end(path), begin(_path)); // O(length path)
 
     // O(length path)
-    _q = accumulate(begin(_path), end(_path), 0,
-        [&in](const NodeId node){
-            return static_cast<Quantity>(
-                    (node != 0) ? in.getNodes()[node].demand : 0
-            );
+    _q = accumulate(begin(_path), end(_path), static_cast<Quantity>(0),
+        [&in](const Quantity acc, const NodeId node){
+            const Quantity q = (node != 0) ? in.getNodes()[node].demand : 0;
+            return acc + q;
         });
 
     // O(length path)
@@ -78,11 +77,11 @@ static LengthDelta get_delta(
     const NodeId r = *it_r;
     const NodeId s = *it_s;
 
-    const Length len_r_node = in->getDistances()[r][node];
-    const Length len_node_s = in->getDistances()[node][s];
-    const Length len_r_s    = in->getDistances()[r][s];
+    const Length len_r_node = static_cast<Length>(in->getDistances()[r][node]);
+    const Length len_node_s = static_cast<Length>(in->getDistances()[node][s]);
+    const Length len_r_s    = static_cast<Length>(in->getDistances()[r][s]);
 
-    return len_r_node + len_node_s - len_r_s;
+    return static_cast<LengthDelta>(len_r_node + len_node_s - len_r_s);
 
 }
 
