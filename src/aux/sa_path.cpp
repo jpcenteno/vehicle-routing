@@ -40,6 +40,13 @@ SAPath::SAPath(const Instance& in, vector<NodeId> path) {
 }
 
 
+SAPath::SAPath(const SAPath& other)
+        : _in(other._in),
+          _path(other._path),
+          _length(other._length),
+          _q(other._q) {}
+
+
 Length SAPath::get_length() const {
     return _length;
 }
@@ -49,6 +56,10 @@ Quantity SAPath::get_quantity() const {
     return _q;
 }
 
+
+const std::list<NodeId>& SAPath::get_nodes() const {
+    return _path;
+}
 
 size_t SAPath::size() const {
     // No cuenta el deposito que figura 2 veces en _path

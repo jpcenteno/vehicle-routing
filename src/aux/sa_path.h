@@ -3,16 +3,10 @@
 #include <vector>
 #include <cstdint>
 
+#include "sa_defs.h"
 #include "../lib/data.h"
 
 using namespace std;
-
-using NodeId      = size_t;
-using PathIndex   = size_t;
-using Length      = uint32_t;
-using LengthDelta = int32_t;
-using Quantity    = uint32_t;
-
 
 /** Ruta utilizada en simulated annealing.
  */
@@ -26,6 +20,12 @@ public:
      */
     SAPath(const Instance& in, vector<NodeId> nodes);
 
+    /** Constructor por copia.
+     *
+     * @complejidad: O( FIXME )
+     */
+    SAPath(const SAPath&);
+
     /** Devuelve longitud del camino. Incluye el paso por el deposito.
      *
      * @complejidad O(1)
@@ -37,6 +37,8 @@ public:
      * @complejidad O(1)
      */
     Quantity get_quantity() const;
+
+    const std::list<NodeId>& get_nodes() const;
 
     /** Devuelve cantidad de nodos
      *
