@@ -27,14 +27,14 @@ float TwoOpt::costo_ruta(const vector<size_t>& ruta, const MatrizDist& dist) con
 	Output:
 		- Ruta con los nodos intercambiados tal que nueva_ruta = [0, 1, ... , j, j - 1, ... , i + 1, i, ... , n - 1]
 */
-vector<size_t> TwoOpt::swap_nodos(int i, int j, const vector<size_t>& ruta) const {
+vector<size_t> TwoOpt::swap_nodos(size_t i, size_t j, const vector<size_t>& ruta) const {
 	vector<size_t> nueva_ruta;
-	int n = ruta.size();
+	size_t n = ruta.size();
 
 	nueva_ruta.push_back(0);
-	for (int k = 1; k < i; ++k) nueva_ruta.push_back(ruta[k]);
-	for (int k = j; k >= i; --k) nueva_ruta.push_back(ruta[k]);
-	for (int k = j + 1; k < n - 1; ++k) nueva_ruta.push_back(ruta[k]);
+	for (size_t k = 1; k < i; ++k) nueva_ruta.push_back(ruta[k]);
+	for (size_t k = j; k >= i; --k) nueva_ruta.push_back(ruta[k]);
+	for (size_t k = j + 1; k < n - 1; ++k) nueva_ruta.push_back(ruta[k]);
 	nueva_ruta.push_back(0);
 
 	return nueva_ruta;

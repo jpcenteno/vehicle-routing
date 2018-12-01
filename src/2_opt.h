@@ -10,7 +10,7 @@ class TwoOpt {
 
 private:
 	float costo_ruta(const vector<size_t>& r,  const MatrizDist& dist) const;
-	vector<size_t> swap_nodos(int i, int j, const vector<size_t>& r) const;
+	vector<size_t> swap_nodos(size_t i, size_t j, const vector<size_t>& r) const;
 	float two_opt(vector<size_t>& r, const MatrizDist& dist) const;
 
 public: 
