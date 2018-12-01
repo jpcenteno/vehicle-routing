@@ -2,6 +2,7 @@
 
 #include "lib/CLI11.hpp"
 #include "lib/data.h"
+#include "lib/args.h"
 #include "savings.h"
 #include "goloso.h"
 #include "2_opt.h"
@@ -45,26 +46,16 @@ void printPathList(const PathList& pl) {
 int main(int argc, char * argv[]) {
 
     // CLI
-    CLI::App app {"TP3 - Aed3"};
-
-    std::string algorithm_name;
-    app.add_option("-a,--algo", algorithm_name,
-            "Algoritmo. Puede ser `savings`, `goloso`, `sweep`, `2-opt`, `annealing`")
-       ->required()
-       ->expected(1);
-
-    CLI::Option* exp_flag = app.add_flag("--exp,-e", "Mostrar tiempo de ejecución");
-
-    CLI11_PARSE(app, argc, argv);
+    PARSEARGS();
 
     Algorithm algo;
-    getAlgorithm(algorithm_name, algo);
+    getAlgorithm(args::algorithm_name, algo);
 
     // Lee STDIN
     const Instance instance;
 
     // Si se pasa el parámetro -e por consola se muestra el tiempo de ejecución
-    if (*exp_flag) {
+    if (*args::exp_flag) {
         double avg = 0;
         cout << instance.size();
         for (int k = 0; k < 3; k++) {
