@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LIB_ARGS_HPP
+#define LIB_ARGS_HPP
 
 #include <string>
 #include "CLI11.hpp"
@@ -20,6 +21,11 @@ namespace args {
     // Flag "experimentación"
     CLI::Option* exp_flag;
 
+    // -- Simuleated Annealing ----------------------------------------------
+
+    uint32_t max_iters = std::numeric_limits<uint32_t>::max();
+    float    beta = 0.7f;
+
 }
 
 /** Configura el parser de argumentos */
@@ -33,9 +39,15 @@ void init_arg_parsing() {
 
     args::exp_flag = args::app.add_flag("--exp,-e", "Mostrar tiempo de ejecución");
 
+    args::app.add_option("--max-iters,-k", args::max_iters,
+            "Cantidad máxima de iteraciones en Simulated Annealing.");
+
+    args::app.add_option("--beta,-b", args::beta,
+            "Cantidad máxima de iteraciones en Simulated Annealing.");
 }
 
 #define PARSEARGS() \
     init_arg_parsing(); \
     CLI11_PARSE(args::app, argc, argv);
 
+#endif //LIB_ARGS_HPP

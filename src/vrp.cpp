@@ -2,11 +2,12 @@
 
 #include "lib/CLI11.hpp"
 #include "lib/data.h"
-#include "lib/args.h"
+#include "lib/args.hpp"
 #include "savings.h"
 #include "goloso.h"
 #include "2_opt.h"
 #include "sweep_tspGoloso.h"
+#include "simulated_annealing.h"
 
 
 
@@ -20,7 +21,7 @@ int getAlgorithm(const string& name, Algorithm& a) {
     } else if (name == "2-opt") {
         a = TwoOpt();
     } else if (name == "annealing") {
-        return 0;
+        a = SimulatedAnneling();
     } else {
         return 0;
     }
