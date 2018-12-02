@@ -1,5 +1,4 @@
-#ifndef LIB_ARGS_HPP
-#define LIB_ARGS_HPP
+#pragma once
 
 #include <string>
 #include "CLI11.hpp"
@@ -26,13 +25,14 @@ namespace args {
     uint32_t max_iters = std::numeric_limits<uint32_t>::max();
     float    beta = 0.7f;
 
+    void init_arg_parsing();
+
 }
 
 /** Configura el parser de argumentos */
-void init_arg_parsing() {
+void args::init_arg_parsing() {
 
-    std::string algorithm_name;
-    args::app.add_option("-a,--algo", algorithm_name,
+    args::app.add_option("-a,--algo", args::algorithm_name,
             "Algoritmo. Puede ser `savings`, `goloso`, `sweep`, `2-opt`, `annealing`")
        ->required()
        ->expected(1);
@@ -47,7 +47,5 @@ void init_arg_parsing() {
 }
 
 #define PARSEARGS() \
-    init_arg_parsing(); \
+    args::init_arg_parsing(); \
     CLI11_PARSE(args::app, argc, argv);
-
-#endif //LIB_ARGS_HPP
