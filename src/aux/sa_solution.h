@@ -36,7 +36,7 @@ public:
     /** Devuelve la diferencia entre la solucion resultande del intercambio y
      * la solución actual.
      */
-    bool delta(const SASolution::NodeExchange&) const;
+    LengthDelta delta(const SASolution::NodeExchange&) const;
 
     /** Realiza el intercambio mutando esta estructura. */
     void acceptExchange(const SASolution::NodeExchange&);

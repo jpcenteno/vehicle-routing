@@ -52,7 +52,7 @@ void SASolution::getNeighbors(
 
 }
 
-bool SASolution::delta(const SASolution::NodeExchange& exc) const {
+LengthDelta SASolution::delta(const SASolution::NodeExchange& exc) const {
 
     const Length prev_len_src_path = _paths[exc.src_path].get_length();
     const Length prev_len_dst_path = _paths[exc.dst_path].get_length();
