@@ -7,6 +7,7 @@
 #include "aux/sa_defs.h"
 #include "aux/sa_path.h"
 #include "aux/sa_solution.h"
+#include "lib/args.hpp"
 #include "savings.h"
 
 /** revuelve un float en ~U(0,1) */
