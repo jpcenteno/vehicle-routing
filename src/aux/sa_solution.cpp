@@ -63,9 +63,10 @@ LengthDelta SASolution::delta(const SASolution::NodeExchange& exc) const {
     const Length post_len_dst_path =
         _paths[exc.dst_path].size_after_insert(exc.src_node);
 
-    return _length
-        - prev_len_src_path + post_len_src_path
-        - prev_len_dst_path + post_len_dst_path;
+    return - static_cast<LengthDelta>(prev_len_src_path)
+           + static_cast<LengthDelta>(post_len_src_path)
+           - static_cast<LengthDelta>(prev_len_dst_path)
+           + static_cast<LengthDelta>(post_len_dst_path);
 
 }
 
