@@ -34,7 +34,7 @@ public:
     void getNeighbors(std::vector<SASolution::NodeExchange>&) const;
 
     /** Devuelve la diferencia entre la solucion resultande del intercambio y
-     * la solución actual.
+     *  la solución actual.
      */
     LengthDelta delta(const SASolution::NodeExchange&) const;
 
