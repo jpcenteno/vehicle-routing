@@ -15,12 +15,11 @@
 // de simplificar los calculos internos. Estos deberían ser transparentes para
 // el usuario.
 
+#include <iostream> // FIXME sacalo
+SAPath::SAPath(const Instance& in, vector<NodeId> path) : _in(&in) {
 
-SAPath::SAPath(const Instance& in, vector<NodeId> path) {
 
-    _in = &in; // O(1)
-
-    copy(begin(path), end(path), begin(_path)); // O(length path)
+    copy(begin(path), end(path), std::back_inserter(_path)); // O(length path)
 
     // O(length path)
     _q = accumulate(begin(_path), end(_path), static_cast<Quantity>(0),

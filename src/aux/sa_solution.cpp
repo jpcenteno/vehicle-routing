@@ -8,10 +8,11 @@ SASolution::SASolution(const Instance& in, const PathList& pl)
         : _in(&in) {
 
     _paths.clear();
-    std::transform(pl.first.begin(), pl.first.end(), _paths.begin(),
+    std::transform(pl.first.begin(), pl.first.end(), std::back_inserter(_paths),
         [&in](const std::vector<NodeId>& vec){
             return SAPath(in, vec);
         });
+
 
     _length = std::accumulate(_paths.begin(), _paths.end(), 0u,
         [](const Length& acc, const SAPath& path){
@@ -24,7 +25,9 @@ SASolution::SASolution(const SASolution& other)
         : _in(other._in), _length(other._length) {
 
     _paths.clear();
-    std::copy(other._paths.begin(), other._paths.end(), _paths.begin());
+    std::transform( other._paths.begin(), other._paths.end(),
+                    std::back_inserter(_paths),
+                    [](const SAPath& x){ return SAPath(x); });
 
 }
 
@@ -41,8 +44,9 @@ void SASolution::getNeighbors(
 
                 // FIXME pushear solo si es factible!!
                 const NodeExchange exc(src_path, dst_path, src_node);
-                if (not isFeasible(exc)) { continue; }
-                neighbors.push_back(exc);
+                if (isFeasible(exc)) {
+                    neighbors.push_back(exc);
+                }
 
             }
         }
