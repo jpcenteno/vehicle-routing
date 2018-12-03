@@ -7,7 +7,7 @@
 #include "aux/sa_defs.h"
 #include "aux/sa_path.h"
 #include "aux/sa_solution.h"
-#include "lib/args.hpp"
+#include "lib/args.h"
 #include "savings.h"
 
 /** revuelve un float en ~U(0,1) */
@@ -15,6 +15,9 @@ inline float rand_uniform() {
     float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     return r;
 }
+
+
+SimulatedAnneling::SimulatedAnneling(const Args& args) : _args(args) {}
 
 
 PathList SimulatedAnneling::operator()(const Instance& in) const {
@@ -34,7 +37,7 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
     float t = static_cast<float>(s.delta(*it_max_delta));
 
     uint32_t k = 0;
-    while ( k  < args::max_iters ) {
+    while ( k  < _args.max_iters ) {
 
         s.getNeighbors(neighbors);
         for ( const SASolution::NodeExchange& exc : neighbors ) {
@@ -52,7 +55,7 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
             }
         }
 
-        t = t * args::beta;
+        t = t * _args.beta;
     }
 
     return s_best.to_pathlist();

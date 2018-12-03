@@ -2,7 +2,7 @@
 
 #include "lib/CLI11.hpp"
 #include "lib/data.h"
-#include "lib/args.hpp"
+#include "lib/args.h"
 #include "savings.h"
 #include "goloso.h"
 #include "2_opt.h"
@@ -11,7 +11,7 @@
 
 
 
-int getAlgorithm(const string& name, Algorithm& a) {
+int getAlgorithm(const string& name, Algorithm& a, const Args& args) {
     if (name == "savings") {
         a = Savings();
     } else if (name == "goloso") {
@@ -21,7 +21,7 @@ int getAlgorithm(const string& name, Algorithm& a) {
     } else if (name == "2-opt") {
         a = TwoOpt();
     } else if (name == "annealing") {
-        a = SimulatedAnneling();
+        a = SimulatedAnneling(args);
     } else {
         return 0;
     }
@@ -47,16 +47,17 @@ void printPathList(const PathList& pl) {
 int main(int argc, char * argv[]) {
 
     // CLI
-    PARSEARGS();
+    Args args;
+    CLI11_PARSE(args.app, argc, argv);
 
     Algorithm algo;
-    getAlgorithm(args::algorithm_name, algo);
+    getAlgorithm(args.algorithm_name, algo, args);
 
     // Lee STDIN
     const Instance instance;
 
     // Si se pasa el parámetro -e por consola se muestra el tiempo de ejecución
-    if (*args::exp_flag) {
+    if (*args.exp_flag) {
         double avg = 0;
         cout << instance.size();
         for (int k = 0; k < 3; k++) {
