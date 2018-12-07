@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <numeric>
 #include <limits>
+#include <cmath>
 
 #include "simulated_annealing.h"
 #include "aux/sa_defs.h"
@@ -38,13 +39,14 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
 
     uint32_t k = 0;
     while ( k  < _args.max_iters ) {
+        std::cerr << "K = " << k << std::endl;
 
         s.getNeighbors(neighbors);
         for ( const SASolution::NodeExchange& exc : neighbors ) {
 
             LengthDelta delta = s.delta(exc);
 
-            if (delta < 0 or (- delta / t) < rand_uniform()) {
+            if (delta < 0 or std::exp(-delta / t) < rand_uniform()) {
 
                 s.acceptExchange(exc);
                 if ( s.get_length() < s_best.get_length() ) {
@@ -56,6 +58,8 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
         }
 
         t = t * _args.beta;
+
+        k++;
     }
 
     return s_best.to_pathlist();
