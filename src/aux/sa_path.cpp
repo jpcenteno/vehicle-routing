@@ -185,9 +185,9 @@ Length SAPath::del_node(const NodeId node) {
 
     // Va a quitar el nodo `node` de entre los dos nodos contiguos (r, s)
 
-    auto it_r = begin(_path);
-    while (* next(it_r) != node) { it_r++; }
-    const auto it_s = next(it_r, 2);
+    const auto it_node = std::find(std::begin(_path), std::end(_path), node);
+    const auto it_r = std::prev(it_node);
+    const auto it_s = std::next(it_node);
 
     LengthDelta neg_delta = get_delta(node, it_r, it_s, _in);
     _length -= static_cast<Length>(neg_delta);

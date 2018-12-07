@@ -39,7 +39,8 @@ void SASolution::getNeighbors(
         for (PathId dst_path = 0; dst_path < _paths.size(); ++dst_path) {
             if (src_path == dst_path) { continue; }
 
-            for (const NodeId src_node : _paths[src_path].get_nodes()) {
+            const std::list<NodeId>& src_nodes = _paths[src_path].get_nodes();
+            for (const NodeId src_node : src_nodes) {
                 if (src_node == 0) { continue; }
 
                 // FIXME pushear solo si es factible!!
@@ -80,10 +81,10 @@ void SASolution::acceptExchange(const SASolution::NodeExchange& exc) {
     const Length prev_len_dst_path = _paths[exc.dst_path].get_length();
 
     const Length post_len_src_path =
-        _paths[exc.dst_path].del_node(exc.src_path);
+        _paths[exc.src_path].del_node(exc.src_node);
 
     const Length post_len_dst_path =
-        _paths[exc.dst_path].add_node(exc.src_path);
+        _paths[exc.dst_path].add_node(exc.src_node);
 
     _length = _length
         - prev_len_src_path + post_len_src_path
