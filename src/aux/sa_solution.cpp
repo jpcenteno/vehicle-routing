@@ -115,7 +115,7 @@ PathList SASolution::to_pathlist() const {
         std::copy(
             _paths[i].get_nodes().begin(),
             _paths[i].get_nodes().end(),
-            pl.first[i].begin());
+            std::back_inserter(pl.first[i]));
     }
 
     return pl;
