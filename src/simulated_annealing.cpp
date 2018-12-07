@@ -10,6 +10,9 @@
 #include "aux/sa_solution.h"
 #include "lib/args.h"
 #include "savings.h"
+#include "goloso.h"
+#include "2_opt.h"
+#include "sweep_tspGoloso.h"
 
 /** revuelve un float en ~U(0,1) */
 inline float rand_uniform() {
@@ -21,9 +24,26 @@ inline float rand_uniform() {
 SimulatedAnneling::SimulatedAnneling(const Args& args) : _args(args) {}
 
 
+Algorithm getInitialAlgorithm(const string& name) {
+    if (name == "savings") {
+        return Savings();
+    } else if (name == "goloso") {
+        return Goloso();
+    } else if (name == "sweep") {
+        return Sweep();
+    } else if (name == "2-opt") {
+        return TwoOpt();
+    } else {
+        throw std::runtime_error(
+                "No existe el la heuristica inicial especificada.");
+    }
+}
+
+
 PathList SimulatedAnneling::operator()(const Instance& in) const {
 
-    const PathList pl = Savings()(in);
+    const Algorithm f = getInitialAlgorithm(_args.initial_algorithm_name);
+    const PathList pl = f(in);
 
     SASolution s(in, pl);
     SASolution s_best(s); // Mejor solución conocida hasta el momento

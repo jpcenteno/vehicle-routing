@@ -34,4 +34,8 @@ public:
     /** Factor de reducción de temperatura */
     float    beta;
 
+    /** Nombre del algoritmo inicial a usar. no puede ser simulated annealing
+     */
+    std::string initial_algorithm_name;
+
 };
