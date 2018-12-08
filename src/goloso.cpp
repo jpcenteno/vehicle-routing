@@ -8,10 +8,10 @@ PathList Goloso::operator()(const Instance& instance) const {
 	MatrizDist dist = instance.getDistances();
 	vector<bool> visitados(n, false); 
 	size_t cant_nodos = 1;
-	int costo = 0;
+	unsigned int costo = 0;
 	unsigned int carga;
 	size_t indice_min, i;
-    float min;
+    unsigned int min;
 	unsigned int C = static_cast<unsigned int> (instance.getCapacity());
 
 

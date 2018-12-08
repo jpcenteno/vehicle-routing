@@ -76,7 +76,7 @@ struct Angular {
 typedef std::pair<std::vector<std::vector<size_t>>, int> PathList;
 
 /** Matriz distancias entre nodos */
-typedef std::vector<std::vector<float>> MatrizDist;
+typedef std::vector<std::vector<unsigned int>> MatrizDist;
 
 /** Una instancia del problema a resolver */
 class Instance {
