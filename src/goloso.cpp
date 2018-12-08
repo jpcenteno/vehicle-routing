@@ -49,7 +49,7 @@ PathList Goloso::operator()(const Instance& instance) const {
         }
     }
 
-    rutas.second = costo;
+    rutas.second = static_cast<int32_t>(costo);
     return rutas;
 
 
