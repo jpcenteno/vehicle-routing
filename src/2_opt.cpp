@@ -8,9 +8,9 @@
 	Output:
 		- Costo de la ruta
 */
-float TwoOpt::costo_ruta(const vector<size_t>& ruta, const MatrizDist& dist) const {
+unsigned int TwoOpt::costo_ruta(const vector<size_t>& ruta, const MatrizDist& dist) const {
 	size_t last = 0;
-	float costo = 0;
+	unsigned int costo = 0;
 	for (size_t i = 1; i < ruta.size(); ++i) { 
 		costo += dist[last][ruta[i]];
 		last = ruta[i];
@@ -48,9 +48,9 @@ vector<size_t> TwoOpt::swap_nodos(size_t i, size_t j, const vector<size_t>& ruta
  	Output:
  		- Costo de la ruta mejorada (si es posible)
 */
-float TwoOpt::two_opt(vector<size_t>& ruta, const MatrizDist& dist) const {
+unsigned int TwoOpt::two_opt(vector<size_t>& ruta, const MatrizDist& dist) const {
 	size_t n = ruta.size();
-	float mejor_costo = 0;
+	unsigned int mejor_costo = 0;
 	bool hay_mejora = true;
 
 	while (hay_mejora) {
@@ -59,7 +59,7 @@ float TwoOpt::two_opt(vector<size_t>& ruta, const MatrizDist& dist) const {
 		for (size_t i = 1; i < n - 1; ++i) {
 			for (size_t j = i + 1; j < n - 1; ++j) {
 				vector<size_t> nueva_ruta = swap_nodos(i, j, ruta);
-				float nuevo_costo = costo_ruta(nueva_ruta, dist);
+				unsigned int nuevo_costo = costo_ruta(nueva_ruta, dist);
 				if (nuevo_costo < mejor_costo) {
 					hay_mejora = true;
 					ruta = nueva_ruta;

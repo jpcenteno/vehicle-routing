@@ -107,8 +107,8 @@ void Instance::initDistancesMatrix() {
             float y_i = (float) nodes[i].y;
             float x_j = (float) nodes[j].x;
             float y_j = (float) nodes[j].y;
-            distances[i][j] = static_cast<unsigned int>(
-                    round(std::sqrt(std::pow(x_i - x_j, 2) + std::pow(y_i - y_j, 2))));
+            distances[i][j] = static_cast<unsigned int>
+                                (roundf(sqrtf(powf(x_i - x_j, 2) + powf(y_i - y_j, 2))));
         }
     }
 

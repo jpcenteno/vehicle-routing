@@ -9,9 +9,9 @@ using namespace std;
 class TwoOpt {
 
 private:
-	float costo_ruta(const vector<size_t>& r,  const MatrizDist& dist) const;
+	unsigned int costo_ruta(const vector<size_t>& r,  const MatrizDist& dist) const;
 	vector<size_t> swap_nodos(size_t i, size_t j, const vector<size_t>& r) const;
-	float two_opt(vector<size_t>& r, const MatrizDist& dist) const;
+	unsigned int two_opt(vector<size_t>& r, const MatrizDist& dist) const;
 
 public: 
 	PathList operator()(const Instance&) const;

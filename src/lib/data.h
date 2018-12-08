@@ -50,7 +50,7 @@ struct Saving {
 
     size_t i;
     size_t j;
-    float s;
+    unsigned int s;
 
     bool operator<(const Saving &a) const {
         return s < a.s;
@@ -110,7 +110,7 @@ private:
     std::vector<Node> nodes;
 
     /** Matriz de distancias */
-    std::vector<std::vector<float>> distances;
+    std::vector<std::vector<unsigned int>> distances;
 
     /** Inicializa la matriz distances */
     void initDistancesMatrix();

@@ -63,7 +63,7 @@ pair<vector<size_t>, int> tspGoloso(vector<Angular>& cluster, const MatrizDist& 
     size_t cant_nodos = 0;
     int costo = 0;
     size_t indice_min = cluster.size() - 1; //El deposito se agrego siempre como ultimo elemento del cluster
-    float min = 0;
+    unsigned int min = 0;
     size_t i;
     std::vector<size_t> camino;
     while(cant_nodos < n){
