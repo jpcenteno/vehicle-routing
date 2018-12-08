@@ -64,7 +64,7 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
         s.getNeighbors(neighbors);
         for ( const SASolution::NodeExchange& exc : neighbors ) {
 
-            LengthDelta delta = s.delta(exc);
+            float delta = static_cast<float>(s.delta(exc));
 
             if (delta < 0 or std::exp(-delta / t) < rand_uniform()) {
 
