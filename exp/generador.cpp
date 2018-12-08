@@ -25,8 +25,9 @@ int main() {
 		cout << i << " " << coord(gen) << " " << coord(gen) << "\n"; 
 	}
 	cout << "DEMAND_SECTION : \n";
-	for (int i = 1; i <= n; ++i) {
-		cout << i << " " << demand(gen) << "\n"; 
+	cout << 1 << " " << 0 << "\n";
+	for (int i = 2; i <= n; ++i) {
+		cout << i << " " << 52 << "\n"; 		//aca seteo en 52 todas las demandas
 	}
 	cout << "DEPOT_SECTION\n"; 
  	cout << " 1\n";  
