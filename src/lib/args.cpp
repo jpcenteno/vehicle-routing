@@ -24,7 +24,7 @@ Args::Args() {
     app.add_option("--beta,-b", beta,
             "Cantidad máxima de iteraciones en Simulated Annealing.");
 
-    app.add_option("-i,--inicial", algorithm_name,
+    app.add_option("-i,--inicial", initial_algorithm_name,
             "Algoritmo inicial para simulated annealing. Puede ser `savings`,"
             "`goloso`, `sweep`, `2-opt`")
        ->expected(1);
