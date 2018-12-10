@@ -26,6 +26,9 @@ public:
     /** Flag "experimentación" */
     CLI::Option* exp_flag;
 
+    /** Flag "todo" Imprime experimentación a STDERR y resultado a STDOUT */
+    CLI::Option* todo_flag;
+
     // -- Simulated Annealing -----------------------------------------------
 
     /** Cantidad máxima de iteraciones para simulated annealing */

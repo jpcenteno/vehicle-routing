@@ -69,6 +69,25 @@ int main(int argc, char * argv[]) {
         }
         avg /= 3.0;
         cout << " " << avg << endl;
+    } else if (*args.todo_flag) {
+        // Medio roñoso, pero agregamos esta tercera opción para no romper
+        // algunos scripts que ya teníamos.
+
+
+        double avg = 0;
+        cerr << instance.size();
+        PathList result;
+        for (int k = 0; k < 3; k++) {
+            auto start = chrono::steady_clock::now();
+            result = algo(instance);
+            auto end = chrono::steady_clock::now();
+            auto diff = end - start;
+            avg += chrono::duration <double, milli> (diff).count();
+        }
+        printPathList(result);
+        avg /= 3.0;
+        cerr << " " << avg << endl;
+
     } else { // Ejecuta el algoritmo
         const PathList result = algo(instance);
         printPathList(result);

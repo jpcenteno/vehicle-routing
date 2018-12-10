@@ -18,6 +18,8 @@ Args::Args() {
 
     exp_flag = app.add_flag("--exp,-e", "Mostrar tiempo de ejecución");
 
+    todo_flag = app.add_flag("--todo,-t", "Mostrar resultado y tiempo de ejecución");
+
     app.add_option("--max-iters,-k", max_iters,
             "Cantidad máxima de iteraciones en Simulated Annealing.");
 
