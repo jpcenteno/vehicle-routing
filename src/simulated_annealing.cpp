@@ -41,7 +41,6 @@ Algorithm getInitialAlgorithm(const string& name) {
 
 
 PathList SimulatedAnneling::operator()(const Instance& in) const {
-
     const Algorithm f = getInitialAlgorithm(_args.initial_algorithm_name);
     const PathList pl = f(in);
 
@@ -59,7 +58,6 @@ PathList SimulatedAnneling::operator()(const Instance& in) const {
 
     uint32_t k = 0;
     while ( k  < _args.max_iters ) {
-        std::cerr << "K = " << k << std::endl;
 
         s.getNeighbors(neighbors);
         for ( const SASolution::NodeExchange& exc : neighbors ) {
