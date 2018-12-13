@@ -166,9 +166,9 @@ Length SAPath::add_node(const NodeId node) {
     const auto last = end(_path);
 
     // Si la lista tiene solo el deposito
-    if (it_s == last) { return numeric_limits<Length>::max(); }
+    if (it_s == last) { throw runtime_error("size < 2!!"); }
 
-    auto best_it_r         = it_r; // Punto optimo a partir del cual insertar;
+    auto best_it_s         = it_s; // Punto óptimo antes del cual insertar;
     LengthDelta best_delta = get_delta(node, it_r, it_s, _in);
 
     it_r++;
@@ -178,7 +178,7 @@ Length SAPath::add_node(const NodeId node) {
         const LengthDelta delta = get_delta(node, it_r, it_s, _in);
         if (delta < best_delta) {
             best_delta = delta;
-            best_it_r  = it_r;
+            best_it_s  = it_s;
         }
 
         it_r++;
@@ -186,7 +186,7 @@ Length SAPath::add_node(const NodeId node) {
     }
 
     // Inserta `node` en la mejor posición
-    _path.insert(best_it_r, node);
+    _path.insert(best_it_s, node);
     _q += _in->getNodes()[node].demand;
     _length += static_cast<Length>(best_delta);
 
