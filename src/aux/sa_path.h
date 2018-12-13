@@ -79,9 +79,6 @@ public:
      */
     bool is_add_feasible(const NodeId nnode) const;
 
-    /** Chequea estado del objeto */
-    void check() const;
-
 private:
 
     /** Puntero a la instancia del problema */

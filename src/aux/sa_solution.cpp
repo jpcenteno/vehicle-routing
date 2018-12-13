@@ -1,8 +1,6 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
-#include <set>
-#include <cassert>
 
 #include "sa_solution.h"
 
@@ -21,7 +19,6 @@ SASolution::SASolution(const Instance& in, const PathList& pl)
             return acc + path.get_length();
         });
 
-    check();
 }
 
 SASolution::SASolution(const SASolution& other)
@@ -32,13 +29,10 @@ SASolution::SASolution(const SASolution& other)
                     std::back_inserter(_paths),
                     [](const SAPath& x){ return SAPath(x); });
 
-    check();
-
 }
 
 void SASolution::getNeighbors(
         std::vector<SASolution::NodeExchange>& neighbors) const {
-    check();
 
     neighbors.clear();
     for (PathId src_path = 0; src_path < _paths.size(); ++src_path) {
@@ -64,7 +58,6 @@ void SASolution::getNeighbors(
 }
 
 LengthDelta SASolution::delta(const SASolution::NodeExchange& exc) const {
-    check();
 
     const Length prev_len_src_path = _paths[exc.src_path].get_length();
     const Length prev_len_dst_path = _paths[exc.dst_path].get_length();
@@ -83,7 +76,6 @@ LengthDelta SASolution::delta(const SASolution::NodeExchange& exc) const {
 }
 
 void SASolution::acceptExchange(const SASolution::NodeExchange& exc) {
-    check();
 
     const Length prev_len_src_path = _paths[exc.src_path].get_length();
     const Length prev_len_dst_path = _paths[exc.dst_path].get_length();
@@ -98,11 +90,9 @@ void SASolution::acceptExchange(const SASolution::NodeExchange& exc) {
         - prev_len_src_path + post_len_src_path
         - prev_len_dst_path + post_len_dst_path;
 
-    check();
 }
 
 bool SASolution::isFeasible(const SASolution::NodeExchange& exc) const {
-    check();
 
     return _paths[exc.dst_path].is_add_feasible(exc.src_node);
 
@@ -110,13 +100,11 @@ bool SASolution::isFeasible(const SASolution::NodeExchange& exc) const {
 
 
 Length SASolution::get_length() const {
-    check();
     return _length;
 }
 
 
 PathList SASolution::to_pathlist() const {
-    check();
 
     PathList pl;
 
@@ -132,35 +120,3 @@ PathList SASolution::to_pathlist() const {
 
     return pl;
 }
-
-/** Verifica el estado interno del objeto */
-void SASolution::check() const {
-
-    // verifica c/u path
-    std::for_each(begin(_paths), end(_paths), [](const auto& path){
-        path.check();
-    });
-
-    // verifica que cada nodo pertenezca a uno solo de los paths
-    std::set<NodeId> visitados;
-    std::for_each(begin(_paths), end(_paths), [&visitados](const auto& path){
-        for (const NodeId node : path.get_nodes()) {
-            if (node == 0) {continue;}
-            assert( visitados.find(node) == end(visitados) );
-            visitados.insert(node);
-        }
-    });
-
-    // Verifica que cantidad de nodos sea n
-    size_t n_posta = std::accumulate(begin(_paths), end(_paths), 1u,
-            [](const size_t acc, const SAPath& path){ return acc + path.size(); });
-    assert( n_posta == _in->size() );
-
-    // Verifica que la length sea la posta
-    Length length_posta = std::accumulate(begin(_paths), end(_paths), 0,
-            [](const Length acc, const SAPath& path){ return acc + path.get_length();});
-    assert( length_posta == _length );
-
-
-}
-
