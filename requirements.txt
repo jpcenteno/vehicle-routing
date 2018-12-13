@@ -1,0 +1,10 @@
+ipython
+jupyter
+
+numpy
+pandas
+
+matplotlib
+seaborn
+
+tqdm # Nice progress bars
