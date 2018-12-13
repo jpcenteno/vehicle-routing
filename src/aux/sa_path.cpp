@@ -209,17 +209,58 @@ Length SAPath::del_node(const NodeId node) {
     _q -= _in->getNodes()[node].demand;
     _path.erase(next(it_r));
 
+    check();
     return _length;
-
 }
 
 
 bool SAPath::is_add_feasible(const NodeId node) const {
+    check();
 
     const Quantity node_q = _in->getNodes()[node].demand;
     const Quantity vehicle_q = _in->getCapacity();
 
+    check();
     return node_q + _q <= vehicle_q;
-
 }
 
+void SAPath::check() const {
+
+
+    // _in no lo chequea.
+
+    // Chequea el recorrido empieza y termina con 0. no hay 0s en el medio.
+    assert(_path.front() == 0);
+    assert(_path.back() == 0);
+    std::for_each(next(begin(_path)), prev(end(_path)),
+            [](NodeId node) { assert(node != 0); });
+
+    // Chequea no hay repetidos en el recorrido
+    std::set<NodeId> visitados;
+    std::for_each(next(begin(_path)), prev(end(_path)),
+            [&visitados](NodeId node) {
+                // el nodo no esta
+                assert( visitados.find(node) == end(visitados) );
+                visitados.insert(node);
+            });
+
+    // chequea no hay nodo cuyo valor no sea un id en la instancia.
+    size_t n = _in->size();
+    std::for_each(begin(_path), end(_path), [&n](NodeId node) { assert(node < n); });
+
+    // Chequea cantidad da _q
+    Quantity q_efectivo = std::accumulate(next(begin(_path)), prev(end(_path)), 0,
+        [&](const Quantity acc, const NodeId node){
+            return acc + _in->getNodes()[node].demand;
+        });
+    assert(_q == q_efectivo);
+
+    // Chequea longitud da _length
+    vector<NodeId> path_vec;
+    std::copy(begin(_path), end(_path), back_inserter(path_vec));
+    Length length_efectivo = 0;
+    for (size_t i = 1; i < _path.size(); ++i) {
+        length_efectivo += _in->getDistances()[ path_vec[i - 1] ][ path_vec[i] ];
+    }
+    assert(length_efectivo == _length);
+}
