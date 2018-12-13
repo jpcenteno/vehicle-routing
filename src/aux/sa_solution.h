@@ -57,4 +57,6 @@ private:
 
     vector<SAPath> _paths;
 
+    void check() const;
+
 };

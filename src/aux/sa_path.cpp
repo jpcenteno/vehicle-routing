@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <numeric>
+#include <cassert>
+#include <set>
 
 // Detalles de implementación:
 // ---------------------------
@@ -36,6 +38,7 @@ SAPath::SAPath(const Instance& in, vector<NodeId> path) : _in(&in) {
         _length     += in.getDistances()[prev][node];
     }
 
+    check();
 }
 
 
@@ -43,24 +46,30 @@ SAPath::SAPath(const SAPath& other)
         : _in(other._in),
           _path(other._path),
           _length(other._length),
-          _q(other._q) {}
+          _q(other._q) {
+    check();
+}
 
 
 Length SAPath::get_length() const {
+    check();
     return _length;
 }
 
 
 Quantity SAPath::get_quantity() const {
+    check();
     return _q;
 }
 
 
 const std::list<NodeId>& SAPath::get_nodes() const {
+    check();
     return _path;
 }
 
 size_t SAPath::size() const {
+    check();
     // No cuenta el deposito que figura 2 veces en _path
     return _path.size() - 2;
 }
@@ -96,6 +105,7 @@ static LengthDelta get_delta(
 }
 
 Length SAPath::size_after_insert(const NodeId node) const {
+    check();
 
     // Va a querer insertar el nodo nuevo entre los dos nodos contiguos (r, s)
     // para los cuales sea mínimo el aumento de longitúd.
@@ -124,12 +134,14 @@ Length SAPath::size_after_insert(const NodeId node) const {
         it_s++;
     }
 
+    check();
     return _length + static_cast<Length>(best_delta);
 
 }
 
 
 Length SAPath::size_after_delete(const NodeId node) const {
+    check();
 
     // Quiero calcular el valor de longitud luego de quitar el nodo `node`
 
@@ -138,11 +150,13 @@ Length SAPath::size_after_delete(const NodeId node) const {
     const auto it_s = next(it_r, 2);
 
     LengthDelta neg_delta = get_delta(node, it_r, it_s, _in);
+    check();
     return static_cast<Length>(static_cast<LengthDelta>(_length) - neg_delta);
 
 }
 
 Length SAPath::add_node(const NodeId node) {
+    check();
 
     // Va a insertar el nodo nuevo entre los dos nodos contiguos (r, s) para
     // los cuales sea mínimo el aumento de longitúd.
@@ -176,12 +190,13 @@ Length SAPath::add_node(const NodeId node) {
     _q += _in->getNodes()[node].demand;
     _length += static_cast<Length>(best_delta);
 
+    check();
     return _length;
-
 }
 
 
 Length SAPath::del_node(const NodeId node) {
+    check();
 
     // Va a quitar el nodo `node` de entre los dos nodos contiguos (r, s)
 
